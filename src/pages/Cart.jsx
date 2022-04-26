@@ -9,8 +9,9 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router";
+const KEY = "pk_test_51KrNvTKj1uOJF8gqXIyPJpGcVoe3ERk7doxeMZvXCaRliEdj6ALJsczhNVhSIyB4DukrtxrB9xi7iNvvJeuBH60P00CqZjRF3u";
 
-const KEY = process.env.REACT_APP_STRIPE;
+
 
 const Container = styled.div``;
 
@@ -162,6 +163,7 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const [quantity, setQuantity] = useState(1);
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useNavigate();
@@ -175,16 +177,22 @@ const Cart = () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: 500,
+          amount: cart.total * 100,
         });
         history.push("/success", {
           stripeData: res.data,
           products: cart, });
       } catch {}
+
+     
     };
+
+
     stripeToken && makeRequest(); 
     // eslint-disable-next-line
   }, [stripeToken, cart.total, history]);
+
+
   
   return (
     <Container>
@@ -221,9 +229,16 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                 
+                    <Add/>
+
+                    <ProductAmount >{product.quantity}</ProductAmount>
+
+                    <Remove/>
+
+                    
+                     
+
                   </ProductAmountContainer>
                   <ProductPrice>
                     $ {product.price * product.quantity}

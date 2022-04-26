@@ -20,7 +20,7 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `https://weebking-back.herokuapp.com/api/products/findall`
+            ? `https://weebking-back.herokuapp.com/api/products/filterps/${cat}`
             : "https://weebking-back.herokuapp.com/api/products/findall"
         );
         setProducts(res.data);

@@ -27,13 +27,13 @@ export const sliderItems = [
       id: 1,
       img: "https://www.phoenixnext.com/img/600/744/resize/catalog/product/_/m/_m_megami_no_cafe_terasu_vol1_jacket.jpg",
       title: "NOVEL & MANGA",
-      cat:"MANGA"
+      cat:"stock"
     },
     {
       id: 2,
       img: "https://www.phoenixnext.com/img/600/744/resize/catalog/product/_/l/_ln_tokidoki_bosotto_russiago_vol2_jacket_cover_1.jpg",
       title: "FIGURE",
-      cat:"LIGHTNOVEL"
+      cat:"pre"
     },
     {
       id: 3,

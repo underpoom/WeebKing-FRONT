@@ -22,7 +22,5 @@ const userSlice = createSlice({
   },
 });
 
-export const loginStart = userSlice.actions;
-export const loginSuccess = userSlice.actions;
-export const loginFailure = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
 export default userSlice.reducer;

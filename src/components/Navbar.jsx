@@ -73,14 +73,16 @@ const MenuItem = styled.div`
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px"})}
   
-
-
-
-  
 `;
 
-const Navbar = () => {
+
+
+const Navbar = (type) => {
   const quantity = useSelector(state=>state.cart.quantity)
+  const user = useSelector((state) => state.user.currentUser);
+  
+ 
+ 
   return (
     <Container>
       <Wrapper>
@@ -92,27 +94,15 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>You will find new promotions every day here.</Logo>
+          <Logo>{user!==null?'Welcome : '+user.email:'Please register or login.'}</Logo>
         </Center>
         <Right>
-           {/*ghthth */}
+          {user==null?'':<MenuItem onClick= {()=>localStorage.clear()}>Log out</MenuItem>}
 
-
-         
-          <Link to="/register" style={{textDecoration:"none"}} >
-            
-             <MenuItem > REGISTER </MenuItem>
-          </Link>
-
-          <Link to="/login" style={{textDecoration:"none"}}>
-             <MenuItem >SIGN IN</MenuItem>
-          </Link>
-         
+          {user==null?<Link to="/register" style={{textDecoration:"none"}} ><MenuItem > REGISTER </MenuItem></Link>:''}
+          {user==null?<Link to="/login" style={{textDecoration:"none"}}><MenuItem >LOGIN</MenuItem></Link>:''}
           
-
-         
           
-
           <Link to="/cart">
           <MenuItem>
             <Badge badgeContent={quantity} color="primary">

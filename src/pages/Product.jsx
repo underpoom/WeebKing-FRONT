@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import { addtocart } from "../redux/apiCalls";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -149,10 +152,29 @@ const Product = () => {
     }
   };
 
-  const handleClick = () => {
+
+  const user = useSelector((state) => state.user.currentUser);
+
+  const handleClick = async () => { 
+
+    if(user!==null){
+
+    const article = {  quantity:quantity ,userId:user._id};
+    const headers = { 
+        'token': 'Bearer '+user.accessToken
+    };
+
+    await axios.put('https://weebking-back.herokuapp.com/api/stock/addtocart/'+id, article, { headers })
+        .then(res=> console.log(res))
+        .catch(err=> console.log(err))
+  }
+    
+ 
     dispatch(
       addProduct({ ...product, quantity, color, size })
     );
+
+    
   };
   return (
     <Container>
@@ -165,6 +187,7 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
+          <Desc>{product.amount} Are aviliable now.</Desc>
           <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
@@ -184,9 +207,11 @@ const Product = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
+
               <Remove onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
+
             </AmountContainer>
             <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
